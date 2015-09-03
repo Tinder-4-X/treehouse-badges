@@ -1,3 +1,7 @@
+if (typeof require !== undefined) {
+	require("./badge.js");
+}
+
 // person.js
 
 // person object needs:
@@ -25,3 +29,8 @@ var Person = (function (){
 
 })();
 
+
+
+if (typeof module !== "undefined") {
+  module.exports = Person;
+}
