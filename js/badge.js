@@ -1,6 +1,6 @@
 // badge.js
 
-if (typeof require !== undefined) {
+if (typeof require !== "undefined") {
 	require("./person.js");
 }
 
@@ -12,6 +12,11 @@ var Badge = (function() {
 	    this.image = "";
 	    this.link = "";
 	}
+
+    Badge.prototype.toString = function() {
+      var output = this.name + " owners: " + this.owners;
+      return output;
+    }
 
 	return Badge;
 
