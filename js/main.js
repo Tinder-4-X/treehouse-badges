@@ -27,7 +27,6 @@
           var existingBadge = null;
           badges.forEach(function (badge) {
             if (badge.name === b.name) {
-              console.log("it does exist");
               badgeExists = true;
               existingBadge = badge;
             }
@@ -56,6 +55,9 @@
     });
   }
 
+  function badgesOfPerson(person) {
+    person.badges
+  }
 
 
 
@@ -66,41 +68,3 @@
   })
 
 })();
-
-
-// $(function() {
-//   var userIDs = ["jasonsiren", "erikphansen", "patharryux"];
-//   var completed = 0;
-//   var badgeImageArrays = [];
-//   var users = [];
-//
-//   // make an AJAX call for each person to get data from treehouse
-//   userIDs.forEach(function (e, i) {
-//     var url = "https://teamtreehouse.com/" + e + ".json";
-//     $.getJSON(url, function (data) {
-//       var theseBadges = [];
-//       users[i] = data.name;
-//       data.badges.forEach(function (e) {
-//         theseBadges.push(e.icon_url);
-//       })
-//       badgeImageArrays[i] = theseBadges;
-//       if (++completed === userIDs.length) {
-//         console.log("we got all the data back!");
-//         buildUI();
-//       }
-//     });
-//   });
-//
-//   function buildUI() {
-//     // for each array badgeImageArrays, make a new div and fill it with images
-//     badgeImageArrays.forEach(function (e, i) {
-//       var $newDiv = $("<div>").addClass("badges", userIDs[i]).appendTo($("body"));
-//       $newDiv.append("<h2>" + users[i] + "</h2>");
-//       // now add the images to the $newDiv
-//       e.forEach(function (img, i) {
-//         var $newImg = $("<img src='" + img + "'/>").addClass("badge");
-//         $newDiv.append($newImg);
-//       })
-//     })
-//   }
-// });
