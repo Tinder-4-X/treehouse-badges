@@ -7,7 +7,7 @@ var Controller = (function() {
 		// var usernames = ["patharryux", "jasonsiren", "erikphansen", "mitchelllillie", "jeffdunn", "donguyen", "mkelley2", "josephfraley2", "kathleenkent", "adamtaitano"];
 		this.people = [];
 		this.badges = [];
-		this.completed = 0;
+		this.completedCallback = null;
 	}
 
 	function makeCallback(scope) {
@@ -55,6 +55,7 @@ var Controller = (function() {
 			});
 			if (scope.people.length === scope.usernames.length) {
 				console.log(scope.people[0].badges[0]);
+				if (scope.completedCallback) scope.completedCallback(scope);
 				// uibuilder.build();
 			}
 		}
@@ -73,7 +74,12 @@ var Controller = (function() {
 
 
 	Controller.prototype.badgesOfPerson = function(person) {
-		// return person.badges
+		// loop over the person.badges array and pull out the `badge` key for each object
+		var badgesArray = [];
+		person.badges.forEach(function (e) {
+			badgesArray.push(e.badge)
+		})
+		return badgesArray;
 	}
 
 	return Controller;
