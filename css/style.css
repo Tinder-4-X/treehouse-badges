@@ -1,1 +1,59 @@
 /* style.css */
+
+@import url(https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700,300);
+
+
+
+body {
+    font-size: 1rem;
+    background: rgba(237,239,240,1.0);
+    font-family: 'Source Sans Pro', sans-serif;
+    color: rgba(75,86,88,1.0);
+}
+
+header {
+    padding: 2% 5% 0% 5%;
+}
+
+h1{
+    color: rgba(56,64,71,1.0);
+}
+
+a.badge_link {
+    border-radius: 6px;
+    width:15%;
+    display: inline-block;
+    margin: 0 auto;
+    border: 2px solid rgba(100,100,100,1.0);
+    background: transparent;
+    transition: background .5s;
+}
+
+a.badge_link:hover {
+    background: rgba(200,200,200,1.0);
+}
+
+img.badge_img {
+    width:100%;
+}
+
+span.badge_name {
+    display: block;
+}
+
+span.badge_score {
+    display: block;
+}
+
+
+.card {
+    margin: 2% 5%;
+    padding: 3% 5%;
+    background: rgba(255,255,255,1.0);
+    box-shadow: 0 2px 0 rgba(0,0,0,0.07);
+    border-radius: 4px;
+}
+
+.card_header {
+
+}
