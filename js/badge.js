@@ -1,5 +1,8 @@
 // badge.js
 
+if (typeof require !== undefined) {
+	require("./person.js");
+}
 
 var Badge = (function() {
 
@@ -13,3 +16,7 @@ var Badge = (function() {
 	return Badge;
 
 })();
+
+if (typeof module !== "undefined") {
+  module.exports = Badge;
+}
