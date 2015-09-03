@@ -65,17 +65,9 @@ var Controller = (function() {
 		// make get JSON calls for each username
 		// parse each JSON object and create a ner Person object for each
 		// and make a new Badge or update the existing Badge
-
-
 		this.usernames.forEach(function(e, i) {
 			var url = "https://teamtreehouse.com/" + e + ".json";
-			$.ajax({
-				method: "GET",
-				url: url,
-				context: this,
-				dataType: "json"
-			}).done(makeCallback(this))
-			// $.getJSON(url, makeCallback(this));
+			$.getJSON(url, makeCallback(this));
 		}, this)
 	}
 
