@@ -1,4 +1,4 @@
-if (typeof require !== undefined) {
+if (typeof require !== "undefined") {
 	require("./badge.js");
 }
 
@@ -6,7 +6,7 @@ if (typeof require !== undefined) {
 
 // person object needs:
 
-// name 
+// name
 // userName
 // badges
 // gravatar address - linked to treehouse - has profile photo
@@ -18,12 +18,18 @@ var Person = (function (){
 		this.username = '';
 		this.badges = [];
 		this.gravatar = '';
-		
+
 	}
 
 	Person.prototype.numBadges = function(){
 		return this.badges.length;
 	}
+
+  Person.prototype.toString = function() {
+    // var output = this.name + " badges: " + this.badges;
+    var output = " " + this.name + " ";
+    return output;
+  }
 
 	return Person;
 
