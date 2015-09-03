@@ -1,6 +1,6 @@
 // main.js
 (function() {
-  var usernames = ["patharryux", "jasonsiren"];
+  var usernames = ["patharryux", "jasonsiren", "erikphansen"];
   // var usernames = ["patharryux", "jasonsiren", "erikphansen", "mitchelllillie", "jeffdunn", "donguyen", "mkelley2", "josephfraley2", "kathleenkent", "adamtaitano"];
   var people = [];
   var badges = [];
@@ -34,16 +34,22 @@
           });
           if (badgeExists) {
             existingBadge.owners.push(thisPerson);
+            thisPerson.badges.push({badge:existingBadge,earned:b.earned_date})
           } else {
             var newBadge = new Badge();
             newBadge.owners = [thisPerson];
             newBadge.name = b.name;
             newBadge.link = b.url;
+            if (b.name === "Newbie") {
+              newBadge.link = "https://www.teamtreehouse.com"
+            }
             newBadge.image = b.icon_url;
             badges.push(newBadge);
+            thisPerson.badges.push({badge:newBadge,earned:b.earned_date})
           }
         });
         if (++completed === usernames.length) {
+          console.log(people[0].badges[0]);
           // buildUI();
         }
       });
