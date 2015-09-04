@@ -4,16 +4,7 @@ var Controller = (function() {
 
 	function Controller() {
 		// this.usernames = ["patharryux", "jasonsiren", "erikphansen"];
-		this.usernames = ["patharryux",
-						  "jasonsiren",
-						  "erikphansen",
-						  "mitchelllillie",
-						  "jeffdunn",
-						  "donguyen",
-						  "mkelley2",
-						  "josephfraley2",
-						  "kathleenkent",
-						  "adamtaitano"];
+		this.usernames = ['patharryux' , 'jasonsiren' , 'nathanbennett3' , 'erikphansen' , 'donguyen' , 'adamtaitano' , 'jeffdunn' , 'kathleenkent' , 'tybrenner' , 'jenniferminetree' , 'josephfraley2' , 'mitchelllillie' , 'jtz1983' , 'mkelley2']
 		this.people = [];
 		this.badges = [];
 		this.completedCallback = null;
@@ -117,7 +108,7 @@ var Controller = (function() {
 		}, 0, this);
 
 			// 	    return people.reduce(function (sum, e) {
-			// // TODO: `this` is pointing to Window when this is called
+			// // TODO: store this in self and use self in the callback
 			// console.log("score() `this`: " + this);
 			// return sum += this.similarity(e, person);
 			// 	    }, 0);
