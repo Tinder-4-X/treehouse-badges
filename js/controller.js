@@ -1,23 +1,25 @@
-// controller.js
+if (typeof require !== "undefined") {
+	require("./person.js");
+	require("./badge.js");
+}
 
 var Controller = (function() {
 
 	function Controller() {
-		this.usernames = ["patharryux", "jasonsiren", "erikphansen"];
-		// var usernames = ["patharryux", "jasonsiren", "erikphansen", "mitchelllillie", "jeffdunn", "donguyen", "mkelley2", "josephfraley2", "kathleenkent", "adamtaitano"];
+		// this.usernames = ["patharryux", "jasonsiren", "erikphansen"];
+		this.usernames = ['patharryux' , 'jasonsiren' , 'nathanbennett3' , 'erikphansen' , 'donguyen' , 'adamtaitano' , 'jeffdunn' , 'kathleenkent' , 'tybrenner' , 'jenniferminetree' , 'josephfraley2' , 'mitchelllillie' , 'jtz1983' , 'mkelley2']
 		this.people = [];
 		this.badges = [];
-		this.completed = 0;
+		this.completedCallback = null;
 	}
 
-	function makeCallback(scope) {
+	function makeJSONCallback(scope) {
 		function jsonCallback(data) {
 			var theseBadges = data.badges;
 			var thisPerson = new Person();
 			thisPerson.name = data.name;
 			thisPerson.username = data.profile_name;
 			thisPerson.gravatar = data.gravatar_url;
-			console.log(scope);
 			scope.people.push(thisPerson);
 
 			theseBadges.forEach(function(b) {
@@ -53,9 +55,9 @@ var Controller = (function() {
 					})
 				}
 			});
+			// console.log(thisPerson.name + " has " + theseBadges.length + " badges");
 			if (scope.people.length === scope.usernames.length) {
-				console.log(scope.people[0].badges[0]);
-				// uibuilder.build();
+				if (scope.completedCallback) scope.completedCallback(scope);
 			}
 		}
 		return jsonCallback;
@@ -67,15 +69,78 @@ var Controller = (function() {
 		// and make a new Badge or update the existing Badge
 		this.usernames.forEach(function(e, i) {
 			var url = "https://teamtreehouse.com/" + e + ".json";
-			$.getJSON(url, makeCallback(this));
+			$.getJSON(url, makeJSONCallback(this));
 		}, this)
 	}
 
+	Controller.prototype.getPersonByUsername = function (name) {
+		for (var i = 0; i < this.people.length; i++) {
+			if (this.people[i].username === name) {
+				return this.people[i];
+			}
+		}
+	}
 
 	Controller.prototype.badgesOfPerson = function(person) {
-		// return person.badges
+		// loop over the person.badges array and pull out the `badge` key for each object
+		return person.getBadgeObjects();
 	}
+
+	// returns the badges that p1 and p2 have in common
+	Controller.prototype.intersectBadges = function (p1, p2) {
+	    return _.intersection(p1.getBadgeObjects(), p2.getBadgeObjects());
+	}
+
+	// returns an array of Badge objects
+	Controller.prototype.getUnearnedBadgesFor = function (person) {
+		return _.difference(this.badges, person.getBadgeObjects());
+	};
+
+	Controller.prototype.similarity = function (p1, p2) {
+		var badgesA = p1.getBadgeObjects();
+		var badgesB = p2.getBadgeObjects();
+		return this.intersectBadges(p1, p2).length / Math.max(badgesA.length, badgesB.length);
+	}
+
+	Controller.prototype.score = function (badge, person) {
+	    // find all people with the badge, not including `person`
+	    var people = _.difference(badge.owners, [person]);
+	    // return the sum of compatability of `person` with all the people
+		return _.reduce(people, function (sum, e) {
+			return sum += this.similarity(e, person);
+		}, 0, this);
+
+			// 	    return people.reduce(function (sum, e) {
+			// // TODO: store this in self and use self in the callback
+			// console.log("score() `this`: " + this);
+			// return sum += this.similarity(e, person);
+			// 	    }, 0);
+	}
+
+	Controller.prototype.getRecommendationsFor = function (person) {
+		// get the list of badges `person` lacks
+		// get the compatability score for each of those badges
+		// return the five badges with the highest score
+		var unearnedBadges = this.getUnearnedBadgesFor(person);
+		// `sortedBadges` is an array os simple objects with badge and compatibility props
+	    var sortedBadges = unearnedBadges.map(function(e) {
+			var obj = {};
+			obj.badge = e;
+			obj.compatibility = this.score(e, person);
+			return obj;
+		}, this).sort(function(a, b) {
+			return b.compatibility - a.compatibility;
+		});
+		// return sortedBadges; // <--this line returns an array of wrapper objects: {badge: Badge, compatibility: score}
+		return sortedBadges.map(function (e) {
+			return e.badge; // pull out the Badge
+		}).slice(0, 5);
+	};
 
 	return Controller;
 
 })();
+
+if (typeof module !== "undefined") {
+	module.exports = Controller;
+}

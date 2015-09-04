@@ -45,6 +45,25 @@ span.badge_score {
     display: block;
 }
 
+.badge_count {
+    color: yellow;
+}
+
+.badge_gallery {
+    background: green;
+}
+
+.badge_gallery_img {
+    width: 15%;
+}
+
+.badge_recommendations {
+    background: purple;
+}
+
+.badge_recommendation {
+    width: 20%;
+}
 
 .card {
     margin: 2% 5%;
@@ -56,4 +75,14 @@ span.badge_score {
 
 .card_header {
 
+}
+
+.user_img {
+    width: 20%;
+    border-radius: 50%;
+    border: 3px solid red;
+}
+
+.user_name_title {
+    color: orange;
 }
