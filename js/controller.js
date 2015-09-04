@@ -3,8 +3,17 @@
 var Controller = (function() {
 
 	function Controller() {
-		this.usernames = ["patharryux", "jasonsiren", "erikphansen"];
-		// var usernames = ["patharryux", "jasonsiren", "erikphansen", "mitchelllillie", "jeffdunn", "donguyen", "mkelley2", "josephfraley2", "kathleenkent", "adamtaitano"];
+		// this.usernames = ["patharryux", "jasonsiren", "erikphansen"];
+		this.usernames = ["patharryux",
+						  "jasonsiren",
+						  "erikphansen",
+						  "mitchelllillie",
+						  "jeffdunn",
+						  "donguyen",
+						  "mkelley2",
+						  "josephfraley2",
+						  "kathleenkent",
+						  "adamtaitano"];
 		this.people = [];
 		this.badges = [];
 		this.completedCallback = null;
@@ -17,7 +26,6 @@ var Controller = (function() {
 			thisPerson.name = data.name;
 			thisPerson.username = data.profile_name;
 			thisPerson.gravatar = data.gravatar_url;
-			console.log(scope);
 			scope.people.push(thisPerson);
 
 			theseBadges.forEach(function(b) {
@@ -53,10 +61,9 @@ var Controller = (function() {
 					})
 				}
 			});
+			console.log(thisPerson.name + " has " + theseBadges.length + " badges");
 			if (scope.people.length === scope.usernames.length) {
-				console.log(scope.people[0].badges[0]);
 				if (scope.completedCallback) scope.completedCallback(scope);
-				// uibuilder.build();
 			}
 		}
 		return jsonCallback;
@@ -72,15 +79,65 @@ var Controller = (function() {
 		}, this)
 	}
 
+	Controller.prototype.getPersonByUsername = function (name) {
+		for (var i = 0; i < this.people.length; i++) {
+			if (this.people[i].username === name) {
+				return this.people[i];
+			}
+		}
+	}
 
 	Controller.prototype.badgesOfPerson = function(person) {
 		// loop over the person.badges array and pull out the `badge` key for each object
-		var badgesArray = [];
-		person.badges.forEach(function (e) {
-			badgesArray.push(e.badge)
-		})
-		return badgesArray;
+		return person.getBadgeObjects();
 	}
+
+	// returns the badges that p1 and p2 have in common
+	Controller.prototype.intersectBadges = function (p1, p2) {
+	    return _.intersection(p1.getBadgeObjects(), p2.getBadgeObjects());
+	}
+
+	Controller.prototype.getUnearnedBadgesFor = function (person) {
+		return _.difference(this.badges, person.getBadgeObjects());
+	};
+
+	Controller.prototype.similarity = function (p1, p2) {
+		var badgesA = p1.getBadgeObjects();
+		var badgesB = p2.getBadgeObjects();
+		return this.intersectBadges(p1, p2).length / Math.max(badgesA.length, badgesB.length);
+	}
+
+	Controller.prototype.score = function (badge, person) {
+	    // find all people with the badge, not including `person`
+	    var people = _.difference(badge.owners, [person]);
+	    // return the sum of compatability of `person` with of the people
+	    return people.reduce(function (sum, e) {
+			// TODO: `this` is pointing to Window when this is called
+			console.log("score() `this`: " + this);
+			return sum += this.similarity(e, person);
+	    }, 0);
+	}
+
+	Controller.prototype.getRecommendationsFor = function (person) {
+		// get the list of badges `person` lacks
+		// get the compatability score for each of those badges
+		// return the five badges with the highest score
+		var unearnedBadges = this.getUnearnedBadgesFor(person);
+		// `sortedBadges` is an array os simple objects with badge and compatibility props
+	    var sortedBadges = unearnedBadges.map(function(e) {
+			var obj = {};
+			obj.badge = e;
+			obj.compatibility = this.score(e, person);
+			return obj;
+		}, this).sort(function(a, b) {
+			return b.compatibility - a.compatibility;
+		});
+		sortedBadges = sortedBadges.slice(0, 5);
+		return sortedBadges;
+		// return sortedBadges.map(function (e) {
+		// 	return e.badge;
+		// })
+	};
 
 	return Controller;
 
