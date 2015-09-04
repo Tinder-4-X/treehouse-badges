@@ -97,6 +97,7 @@ var Controller = (function() {
 	    return _.intersection(p1.getBadgeObjects(), p2.getBadgeObjects());
 	}
 
+	// returns an array of Badge objects
 	Controller.prototype.getUnearnedBadgesFor = function (person) {
 		return _.difference(this.badges, person.getBadgeObjects());
 	};
@@ -113,7 +114,7 @@ var Controller = (function() {
 	    // return the sum of compatability of `person` with all the people
 		return _.reduce(people, function (sum, e) {
 			return sum += this.similarity(e, person);
-		}, 0, this)
+		}, 0, this);
 
 			// 	    return people.reduce(function (sum, e) {
 			// // TODO: `this` is pointing to Window when this is called
@@ -136,11 +137,10 @@ var Controller = (function() {
 		}, this).sort(function(a, b) {
 			return b.compatibility - a.compatibility;
 		});
-		// sortedBadges = sortedBadges.slice(0, 5);
-		return sortedBadges;
-		// return sortedBadges.map(function (e) {
-		// 	return e.badge;
-		// })
+		// return sortedBadges; // <--this line returns an array of wrapper objects: {badge: Badge, compatibility: score}
+		return sortedBadges.map(function (e) {
+			return e.badge; // pull out the Badge
+		}).slice(0, 5);
 	};
 
 	return Controller;
