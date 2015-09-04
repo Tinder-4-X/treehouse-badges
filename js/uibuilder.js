@@ -41,18 +41,18 @@ var UiBuilder = (function() {
             //Content
             var $badge_count = $( '<h5>' , { id: e.username + "_badge_count" , class: "badge_count" });
             var $name = $( '<h2>' , { class: "user_name" } );
-            var $user_img = $( '<img>' , { src: e.gravatar , id: "user_img_" + e.username , class: "user_img" });
+            var $user_img = $( '<img>' , { src: e.gravatar , alt: e.username , id: "user_img_" + e.username , class: "user_img" });
             var $recommendation_label = $( '<h4>' , { class: "recommendation_label" } );
             var achievements = e.badges;
             var recommend_these = this.controller.getRecommendationsFor(e);
 
             //Badge Images
             achievements.forEach(function( e , i ) {
-                var $small_badge = $( '<img>' , { src: e.badge.image , id: "user_badge_" + e.name , class: "badge_gallery_img" });
+                var $small_badge = $( '<img>' , { src: e.badge.image , alt: e.name , id: "user_badge_" + e.name , class: "badge_gallery_img" });
                 $small_badge.appendTo( $badge_gallery_col );
             });
             recommend_these.forEach(function( e , i ){
-                var $medium_badge = $( '<img>' , { src: e.image , id: "user_badge_" + e.name , class: "recommended_badge_img" });
+                var $medium_badge = $( '<img>' , { src: e.image , alt: e.name  , id: "user_badge_" + e.name , class: "recommended_badge_img" });
                 $medium_badge.appendTo( $rec_badge_col );
             });
 
