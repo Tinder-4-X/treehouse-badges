@@ -19,7 +19,7 @@ var Controller = (function() {
 		this.completedCallback = null;
 	}
 
-	function makeCallback(scope) {
+	function makeJSONCallback(scope) {
 		function jsonCallback(data) {
 			var theseBadges = data.badges;
 			var thisPerson = new Person();
@@ -61,7 +61,7 @@ var Controller = (function() {
 					})
 				}
 			});
-			console.log(thisPerson.name + " has " + theseBadges.length + " badges");
+			// console.log(thisPerson.name + " has " + theseBadges.length + " badges");
 			if (scope.people.length === scope.usernames.length) {
 				if (scope.completedCallback) scope.completedCallback(scope);
 			}
@@ -75,7 +75,7 @@ var Controller = (function() {
 		// and make a new Badge or update the existing Badge
 		this.usernames.forEach(function(e, i) {
 			var url = "https://teamtreehouse.com/" + e + ".json";
-			$.getJSON(url, makeCallback(this));
+			$.getJSON(url, makeJSONCallback(this));
 		}, this)
 	}
 
@@ -110,12 +110,16 @@ var Controller = (function() {
 	Controller.prototype.score = function (badge, person) {
 	    // find all people with the badge, not including `person`
 	    var people = _.difference(badge.owners, [person]);
-	    // return the sum of compatability of `person` with of the people
-	    return people.reduce(function (sum, e) {
-			// TODO: `this` is pointing to Window when this is called
-			console.log("score() `this`: " + this);
+	    // return the sum of compatability of `person` with all the people
+		return _.reduce(people, function (sum, e) {
 			return sum += this.similarity(e, person);
-	    }, 0);
+		}, 0, this)
+
+			// 	    return people.reduce(function (sum, e) {
+			// // TODO: `this` is pointing to Window when this is called
+			// console.log("score() `this`: " + this);
+			// return sum += this.similarity(e, person);
+			// 	    }, 0);
 	}
 
 	Controller.prototype.getRecommendationsFor = function (person) {
@@ -132,7 +136,7 @@ var Controller = (function() {
 		}, this).sort(function(a, b) {
 			return b.compatibility - a.compatibility;
 		});
-		sortedBadges = sortedBadges.slice(0, 5);
+		// sortedBadges = sortedBadges.slice(0, 5);
 		return sortedBadges;
 		// return sortedBadges.map(function (e) {
 		// 	return e.badge;
