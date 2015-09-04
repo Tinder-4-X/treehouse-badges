@@ -1,9 +1,3 @@
-// badge.js
-
-if (typeof require !== "undefined") {
-	require("./person.js");
-}
-
 var Badge = (function() {
 
 	function Badge() {
