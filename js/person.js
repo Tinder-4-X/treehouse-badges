@@ -1,7 +1,3 @@
-if (typeof require !== "undefined") {
-	require("./badge.js");
-}
-
 var Person = (function() {
 	function Person() {
 		this.name = '';
@@ -16,7 +12,6 @@ var Person = (function() {
 	}
 
 	Person.prototype.toString = function() {
-		// var output = this.name + " badges: " + this.badges;
 		var output = " " + this.name + " ";
 		return output;
 	}

@@ -1,4 +1,7 @@
-// controller.js
+if (typeof require !== "undefined") {
+	require("./person.js");
+	require("./badge.js");
+}
 
 var Controller = (function() {
 
@@ -137,3 +140,7 @@ var Controller = (function() {
 	return Controller;
 
 })();
+
+if (typeof module !== "undefined") {
+	module.exports = Controller;
+}
