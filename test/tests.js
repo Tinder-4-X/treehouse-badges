@@ -1,13 +1,13 @@
 // TESTS!
 
-if (typeof require !== 'undefined'){var Person = require('../person.js');
-var Badge = require('../badge.js');
-var Controller = require('../controller.js');
+if (typeof require !== 'undefined'){var Person = require('../js/person.js');
+var Badge = require('../js/badge.js');
+var Controller = require('../js/controller.js');
 
 var chai = require('chai');
-var expect = chai.expect;
-
 };
+
+var expect = chai.expect;
 
 describe('Testing the tester', function() {
     it('should ', function(){
