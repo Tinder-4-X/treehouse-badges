@@ -2,7 +2,12 @@
 
 @import url(https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700,300);
 
-
+/* *********************************************************************************************************************
+ * Main elements
+ */
+* {
+    box-sizing: border-box;
+}
 
 body {
     font-size: 1rem;
@@ -19,70 +24,62 @@ h1{
     color: rgba(56,64,71,1.0);
 }
 
-a.badge_link {
-    border-radius: 6px;
-    width:15%;
-    display: inline-block;
-    margin: 0 auto;
-    border: 2px solid rgba(100,100,100,1.0);
-    background: transparent;
-    transition: background .5s;
-}
-
-a.badge_link:hover {
-    background: rgba(200,200,200,1.0);
-}
-
-img.badge_img {
-    width:100%;
-}
-
-span.badge_name {
-    display: block;
-}
-
-span.badge_score {
-    display: block;
-}
-
-.badge_count {
-    color: yellow;
-}
-
-.badge_gallery {
-    background: green;
-}
-
-.badge_gallery_img {
-    width: 15%;
-}
-
-.badge_recommendations {
-    background: purple;
-}
-
-.badge_recommendation {
-    width: 20%;
+img {
+    max-width: 100%;
 }
 
 .card {
-    margin: 2% 5%;
+    display: inline-block;
+    margin: 5% 5%;
     padding: 3% 5%;
     background: rgba(255,255,255,1.0);
     box-shadow: 0 2px 0 rgba(0,0,0,0.07);
     border-radius: 4px;
 }
 
-.card_header {
-
-}
-
+/* *********************************************************************************************************************
+ * Image styling
+ */
 .user_img {
-    width: 20%;
+    display: block;
+    margin: 0 auto;
     border-radius: 50%;
-    border: 3px solid red;
+}
+.badge_gallery_img {
+    width: 7.5%;
 }
 
-.user_name_title {
-    color: orange;
+.recommended_badge_img {
+    float: right;
+    width:15%;
+}
+
+/* *********************************************************************************************************************
+ * For Debugging Only
+ */
+.col2,.col4,.col8,.col10,.col12 {
+    background: rgba(200,200,200,1.0);
+}
+.card_header_row,
+.badge_gallery_row,
+.badge_recommendation_row {
+    border-top: 10px solid rgba(100,100,100,1.0);
+}
+
+/* *********************************************************************************************************************
+ * Large screens
+ */
+@media all and (min-width: 1024px) {
+
+}
+/* *********************************************************************************************************************
+ * Small devices
+ */
+@media all and (max-width: 768px) {
+
+    .recommended_badge_img {
+        float: none;
+        width:10%;
+    }
+
 }
