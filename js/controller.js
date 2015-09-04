@@ -128,10 +128,13 @@ var Controller = (function() {
 			// 	    }, 0);
 	}
 
-	Controller.prototype.getRecommendationsFor = function (person) {
+	Controller.prototype.getRecommendationsFor = function (person, maxRecs) {
 		// get the list of badges `person` lacks
 		// get the compatability score for each of those badges
 		// return the five badges with the highest score
+		if(arguments.length < 2){
+			maxRecs = 5;
+		}
 		var unearnedBadges = this.getUnearnedBadgesFor(person);
 		// `sortedBadges` is an array os simple objects with badge and compatibility props
 	    var sortedBadges = unearnedBadges.map(function(e) {
@@ -145,7 +148,7 @@ var Controller = (function() {
 		// return sortedBadges; // <--this line returns an array of wrapper objects: {badge: Badge, compatibility: score}
 		return sortedBadges.map(function (e) {
 			return e.badge; // pull out the Badge
-		}).slice(0, 5);
+		}).slice(0, maxRecs);
 	};
 
 	return Controller;
