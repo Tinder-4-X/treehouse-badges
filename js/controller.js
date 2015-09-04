@@ -63,6 +63,17 @@ var Controller = (function() {
 		return jsonCallback;
 	}
 
+	// A function to call from our Mocha test that avoids fetching data from the
+	// *** ONLY CALL THIS WHEN TESTING!!! ***
+	Controller.prototype.populateWithFakeData = function (fakeJSONArray) {
+		var callback = makeJSONCallback(this);
+		this.usernames.length = fakeJSONArray.length;
+		// process each JSON string in the fakeJSONArray
+		fakeJSONArray.forEach(function (e, i) {
+			callback(e);
+		});
+	};
+
 	Controller.prototype.getAndProcessData = function() {
 		// make get JSON calls for each username
 		// parse each JSON object and create a ner Person object for each
